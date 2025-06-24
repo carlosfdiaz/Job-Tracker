@@ -1,4 +1,5 @@
 import HamburgerButton from "./HamburgerButton";
+import ModeToggle from "./theme/mode-toggle"
 type HeaderProps = {
   onMenuClick: () => void;
   isSidebarOpen: boolean; // Add this prop
@@ -6,13 +7,15 @@ type HeaderProps = {
 
 export default function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
   return (
-    <header className="h-16 bg-gray-950 border-gray-700 border-b-1 flex items-center justify-between px-4 shadow z-10">
+    <header className="h-16 border-b-1 flex items-center justify-between px-4 shadow z-10">
       <div className="flex items-center gap-3">
-        <HamburgerButton onClick={onMenuClick} isOpen={isSidebarOpen}/>
+        <HamburgerButton onClick={onMenuClick} isOpen={isSidebarOpen} />
         <span className="text-xl font-bold">Job Tracker</span>
       </div>
-
-      <button className="text-white hover:underline">Sign In</button>
+      <div>
+        <button className="pr-2">Sign In</button>
+        <ModeToggle />
+      </div>
     </header>
   );
 }
