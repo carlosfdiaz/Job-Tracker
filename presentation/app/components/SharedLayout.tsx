@@ -8,9 +8,6 @@ type LayoutProps = {
 
 export default function Layout({ children }: LayoutProps) {
     const [sidebarOpen, setSidebarOpen] = useState(false);
-
-    console.log(sidebarOpen);
-
     return (
         <div className="h-screen w-screen flex flex-col overflow-hidden">
             <Header

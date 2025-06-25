@@ -6,15 +6,6 @@
     "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
 
-/*html,
-body {
-  @apply bg-white dark:bg-gray-900;
-
-  @media (prefers-color-scheme: dark) {
-    color-scheme: dark;
-  }
-}*/
-
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
@@ -55,7 +46,7 @@ body {
 
 :root {
   --radius: 0.625rem;
-  --background: oklch(1 0 0);
+  --background: #FFFAFF;
   --foreground: oklch(0.145 0 0);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.145 0 0);
@@ -86,6 +77,7 @@ body {
   --sidebar-accent-foreground: oklch(0.205 0 0);
   --sidebar-border: oklch(0.922 0 0);
   --sidebar-ring: oklch(0.708 0 0);
+  --sidebar-bg: #23395B;
 }
 
 .dark {
@@ -95,7 +87,7 @@ body {
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.205 0 0);
   --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
+  --primary: oklch(95.143% 0.0032 15.354);
   --primary-foreground: oklch(0.205 0 0);
   --secondary: oklch(0.269 0 0);
   --secondary-foreground: oklch(0.985 0 0);
@@ -130,3 +122,43 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+input {
+  font-size: var(--text-lg); /* 1.125rem (18px) */
+  line-height: var(--text-lg--line-height);
+}
+
+label {
+  font-size: var(--text-base); /* 1rem (16px) */
+  line-height: var(--text-base--line-height); /* calc(1.5 / 1) */
+}
+
+.formError {
+  color: var(--color-red-500);
+  display: block;
+}
+
+.dark .formError {
+  color: var(--color-red-300);
+  display: block;
+}
+
+.sidebar-bg {
+  background-color: var(--sidebar-bg);
+  color: var(--color-primary-foreground);
+  border-color: var(--color-primary-foreground);
+}
+
+.dark .sidebar-bg {
+  background-color: var(--background);
+  color: var(--primary);
+}
+/*html,
+body {
+  @media (prefers-color-scheme: dark) {
+    .formError {
+      color: var(--color-red-300);
+      display: block;
+    }
+  }
+}*/

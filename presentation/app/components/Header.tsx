@@ -13,7 +13,7 @@ export default function Header({ onMenuClick, isSidebarOpen }: HeaderProps) {
         <span className="text-xl font-bold">Job Tracker</span>
       </div>
       <div>
-        <button className="pr-2">Sign In</button>
+        <button className="pr-2 cursor-pointer">Sign In</button>
         <ModeToggle />
       </div>
     </header>

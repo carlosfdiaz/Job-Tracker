@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, use, useContext, useEffect, useState } from "react"
 
 type Theme = "dark" | "light" | "system"
 
@@ -30,22 +30,38 @@ export function ThemeProvider({
     () => (localStorage.getItem(storageKey) as Theme) || defaultTheme
   )
 
+  const handleRsuiteTheme = () => {
+    const root = window.document.documentElement
+    root.classList.remove("rs-theme-dark", "rs-theme-light")
+    if (theme === "system") {
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
+        .matches
+        ? "rs-theme-dark"
+        : "rs-theme-light"
+      root.classList.add(systemTheme)
+    }
+    else if (theme === "dark") {
+      root.classList.add("rs-theme-dark");
+    } else {
+      root.classList.remove("rs-theme-dark");
+    }
+  }
+
   useEffect(() => {
     const root = window.document.documentElement
 
     root.classList.remove("light", "dark")
-
     if (theme === "system") {
       const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
         .matches
         ? "dark"
         : "light"
-
       root.classList.add(systemTheme)
+      handleRsuiteTheme()
       return
     }
-
     root.classList.add(theme)
+    handleRsuiteTheme()
   }, [theme])
 
   const value = {
