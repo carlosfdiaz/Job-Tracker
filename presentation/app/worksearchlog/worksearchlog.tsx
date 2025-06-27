@@ -1,4 +1,4 @@
-import WorkSearchForm from "app/components/WorkSearchForm";
+import WorkSearchForm from "app/components/worksearchforms/WorkSearchForm";
 import {
     Card,
     CardAction,
@@ -8,18 +8,19 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
+import ActivityLogList from "app/components/AcititivyLog/ActivityLogList";
 export function WorkSearchLog() {
-    return (<>
-
-        <Card>
-            <CardHeader>
-                <CardTitle className="text-2xl">Work Search Avitity</CardTitle>
-            </CardHeader>
-            <CardContent>
-                <WorkSearchForm />
-            </CardContent>
-
-        </Card>
-    </>
+    return (
+        <>
+        <ActivityLogList></ActivityLogList>
+            <Card>
+                <CardHeader>
+                    <CardTitle className="text-2xl">Work Search Avitity</CardTitle>
+                </CardHeader>
+                <CardContent>
+                    <WorkSearchForm />
+                </CardContent>
+            </Card>
+        </>
     );
 }

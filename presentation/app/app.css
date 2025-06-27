@@ -123,6 +123,10 @@
   }
 }
 
+button {
+  cursor: pointer;
+}
+
 input {
   font-size: var(--text-lg); /* 1.125rem (18px) */
   line-height: var(--text-lg--line-height);
@@ -152,6 +156,10 @@ label {
 .dark .sidebar-bg {
   background-color: var(--background);
   color: var(--primary);
+}
+
+.danger {
+  color: var(--destructive);
 }
 /*html,
 body {
