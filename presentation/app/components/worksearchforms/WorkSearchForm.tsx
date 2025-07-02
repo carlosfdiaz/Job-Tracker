@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SearchActivities } from "app/data/searchactivities";
@@ -8,20 +8,32 @@ import FilledApplicationsForm from "./FilledApplicationsForm";
 import type { Activity } from "app/types/FormTypes";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function WorkSearchForm() {
-    const [formData, setFormData] = useState<Activity>({
-        id: 0,
-        dateRange: null,
-        searchActivity: "Filled Applications",
-        searchActivityData: {
-            activityDate: null,
-            notes: "",
-            jobTitle: "Software Engineer",
-            companyName: "",
-            postingUrl: "",
-        },
-    });
-    const [calendarRange, setCalendarRange] = useState<DateRange | undefined>(undefined);
+type WorkSearchFormProps = {
+    handleActivityPublish: (data: Activity) => void;
+    activity?: Activity;
+    isEditing: boolean;
+};
+
+export default function WorkSearchForm(props: WorkSearchFormProps) {
+    const [formData, setFormData] = useState<Activity>(
+        props.activity && props.isEditing
+            ? props.activity
+            : {
+                  id: 0,
+                  dateRange: null,
+                  searchActivity: "Filled Applications",
+                  searchActivityData: {
+                      activityDate: null,
+                      notes: "",
+                      jobTitle: "Software Engineer",
+                      companyName: "",
+                      postingUrl: "",
+                  },
+              }
+    );
+    const [calendarRange, setCalendarRange] = useState<DateRange | undefined>(
+        props.activity && props.isEditing ? { from: props.activity?.dateRange?.from, to: props.activity?.dateRange?.to } : undefined
+    );
 
     const handleSetFormData = (data: { name: string; value: DateRange | undefined | string }) => {
         setFormData({
@@ -31,8 +43,13 @@ export default function WorkSearchForm() {
     };
 
     const handlePublishFormData = (data: any) => {
-        // This function can be used to publish the form data to a server or API
-        console.log("Publishing form data:", data);
+        //Compile Work Search Form Fields && Search Activity Form Fields
+        const activityData = {
+            ...formData,
+            searchActivityData: data,
+        };
+        console.log("Activity Data:", activityData);
+        props.handleActivityPublish(activityData);
     };
 
     return (
@@ -76,7 +93,7 @@ export default function WorkSearchForm() {
                     </Select>
 
                     {formData.dateRange && formData.dateRange.from && formData.dateRange.to && (
-                        <FilledApplicationsForm handlePublishFormData={handlePublishFormData} allowedRange={calendarRange} />
+                        <FilledApplicationsForm handlePublishFormData={handlePublishFormData} allowedRange={calendarRange} formData={props.activity?.searchActivityData} isEditing={props.isEditing} />
                     )}
                 </CardContent>
             </Card>

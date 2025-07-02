@@ -8,11 +8,13 @@ import { Calendar } from "@/components/ui/calendar";
 import { useState, type FormEvent } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import type { FilledApplicationsFormData } from "app/types/FormTypes";
+import type {FilledApplicationsFormData } from "app/types/FormTypes";
 
 type FilledApplicationsFormProps = {
     handlePublishFormData: (data: any) => void;
     allowedRange?: { from?: Date; to?: Date };
+    formData?: any;
+    isEditing: boolean;
 };
 
 type FormFieldUpdate = { name: keyof FilledApplicationsFormData; value: string | Date };
@@ -22,7 +24,7 @@ export default function FilledApplicationsForm(props: FilledApplicationsFormProp
     const [date, setDate] = useState<Date | undefined>(undefined);
     const [postingUrlError, setPostingUrlError] = useState<boolean>(false);
     const [activityDateError, setActivityDateError] = useState<boolean>(false);
-    const [formData, setFormData] = useState<FilledApplicationsFormData>({
+    const [formData, setFormData] = useState<FilledApplicationsFormData>(props.formData && props.isEditing ? props.formData : {
         activityDate: null,
         notes: "",
         jobTitle: "Software Engineer",
@@ -107,7 +109,7 @@ export default function FilledApplicationsForm(props: FilledApplicationsFormProp
                         <Label htmlFor="postingUrl" className="mb-1">
                             Posting URL
                         </Label>
-                        <Input name="postingUrl" required onChange={(event) => handleSetFormData({ name: "postingUrl", value: event.target.value })} />
+                        <Input name="postingUrl" required onChange={(event) => handleSetFormData({ name: "postingUrl", value: event.target.value })} value={formData.postingUrl} />
                         {/*postingUrlError && <span className="formError">Enter a valid URL</span>*/}
                     </div>
                     <div>
@@ -125,7 +127,7 @@ export default function FilledApplicationsForm(props: FilledApplicationsFormProp
                         <Label htmlFor="companyName" className="mb-1">
                             Company Name
                         </Label>
-                        <Input name="companyName" required onChange={(event) => handleSetFormData({ name: "companyName", value: event.target.value })} />
+                        <Input name="companyName" required onChange={(event) => handleSetFormData({ name: "companyName", value: event.target.value })} value={formData.companyName} />
                     </div>
                 </div>
                 <Label className="mt-4">Notes</Label>
@@ -134,9 +136,10 @@ export default function FilledApplicationsForm(props: FilledApplicationsFormProp
                     className="mt-4"
                     placeholder="Notes"
                     onChange={(event) => handleSetFormData({ name: "notes", value: event.target.value })}
+                    value={formData.notes}
                 />
                 <Button type="submit" className="mt-4 w-full cursor-pointer">
-                    Add Activity <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
+                    {props.isEditing ? "Edit Activity" : "Add Activity"} <FontAwesomeIcon icon={faPlus}></FontAwesomeIcon>
                 </Button>
             </form>
         </>
