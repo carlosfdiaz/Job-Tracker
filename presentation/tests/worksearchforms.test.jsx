@@ -20,7 +20,7 @@ describe("WorkSearchForm", () => {
         };
         render(<WorkSearchForm handleActivityPublish={vi.fn()} isEditing={true} activity={activity} />);
 
-        // 3. Assert form fields show up
+        //Assert form fields show up
         expect(await screen.findByLabelText(/activity date/i)).toBeInTheDocument();
     });
 });
