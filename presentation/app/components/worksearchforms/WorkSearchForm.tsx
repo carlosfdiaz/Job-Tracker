@@ -7,6 +7,7 @@ import type { DateRange } from "react-day-picker";
 import FilledApplicationsForm from "./FilledApplicationsForm";
 import type { Activity } from "app/types/FormTypes";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ACTIVITY_OPTIONS } from "app/types/ActivityOptions";
 
 type WorkSearchFormProps = {
     handleActivityPublish: (data: Activity) => void;
@@ -52,6 +53,22 @@ export default function WorkSearchForm(props: WorkSearchFormProps) {
         props.handleActivityPublish(activityData);
     };
 
+    const displayFormFragment = () => {
+        if (formData.dateRange && formData.dateRange.from && formData.dateRange.to) {
+            switch (formData.searchActivity) {
+                case ACTIVITY_OPTIONS.FilledApplications:
+                    return (
+                        <FilledApplicationsForm
+                            handlePublishFormData={handlePublishFormData}
+                            allowedRange={calendarRange}
+                            formData={props.activity?.searchActivityData}
+                            isEditing={props.isEditing}
+                        />
+                    );
+            }
+        }
+    };
+
     return (
         <>
             <Card>
@@ -91,10 +108,7 @@ export default function WorkSearchForm(props: WorkSearchFormProps) {
                             </SelectGroup>
                         </SelectContent>
                     </Select>
-
-                    {formData.dateRange && formData.dateRange.from && formData.dateRange.to && (
-                        <FilledApplicationsForm handlePublishFormData={handlePublishFormData} allowedRange={calendarRange} formData={props.activity?.searchActivityData} isEditing={props.isEditing} />
-                    )}
+                    {displayFormFragment()}
                 </CardContent>
             </Card>
         </>
