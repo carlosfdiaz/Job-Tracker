@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: 18
 
-        - name: Install dependencies
+      - name: Install dependencies
         working-directory: ./presentation
         run: npm ci
 
-       - name: Run Vitest
+      - name: Run Vitest
         working-directory: ./presentation
         run: npm run test -- --run --coverage
